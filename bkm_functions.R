@@ -128,7 +128,7 @@ sbm_vs_dcbm <- function(A, k, maxiter, nstart, R) {
       } else wmathat[i, j] <- mean(A[sbmfit$est_comm == i, sbmfit$est_comm == j])
     }
   }
-  
+  wmathat <- (wmathat + t(wmathat))/2
   trep <- replicate(R, sim(list(wmathat, sbmfit$est_comm), maxiter, nstart, "SBM", "SBM")$obj)
   list(pvalue = mean(trep > sbmfit$obj), true_obj = sbmfit$obj, gen_obj = trep)
 }
@@ -142,6 +142,7 @@ dcbm_vs_pabm <- function(A, k, maxiter, nstart, R) {
       wmathat[i, j] <- sum(A[dcbmfit$est_comm == i, dcbmfit$est_comm == j])
     }
   }
+  wmathat <- (wmathat + t(wmathat))/2
   that <- colSums(A)/colSums(wmathat[,dcbmfit$est_comm])
   
   trep <- replicate(R, sim(list(wmathat, that, dcbmfit$est_comm), maxiter, nstart, "DCBM", "DCBM")$obj)
