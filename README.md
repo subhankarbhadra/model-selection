@@ -19,3 +19,5 @@ Table 8: Run modsec_sim_dcbm_vs_nbm.R for the different choices of (n, K, L, w)
 Table 9: Run modsec_sim_dissortative.R for the different choices of delta
 
 Table 10: Run britishmp_bkm.R, dblp_bkm.R, dolphin_bkm.R, karate_bkm.R, and polblogs_bkm.R 
+
+Table 11: Run sc_vs_eigmax.R
