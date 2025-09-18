@@ -8,6 +8,8 @@ library(pbapply)
 source("bkm_functions.R")
 source("koo_functions.R")
 
+# Simulates a network from a 2-community PABM and performs community detection using OSC and Q_3
+#
 sim_pabm_comp_1 <- function(n, maxiter, nstart) {
   k <- 2
   #assortative, balanced
@@ -43,9 +45,9 @@ nstart <- 25
 
 set.seed(12345)
 v <- pbreplicate(100, sim_pabm_comp_1(900, maxiter, nstart))
-# average mislabelling error: OSC, Q3
+# average community detection error: OSC, Q3
 mean(v[1,]); mean(v[2,])
-# s.d. mislabelling error: OSC, Q3
+# s.d. community detection error: OSC, Q3
 sd(v[1,]); sd(v[2,])
 # average runtime: OSC, Q3
 mean(v[3,]); mean(v[4,])

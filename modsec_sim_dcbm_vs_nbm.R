@@ -3,6 +3,16 @@ library(pbapply)
 source("bkm_functions.R")
 source("nbm.R")
 
+# Simulates a network from NBM and performs model selection (DCBM vs. PABM) using Q_2
+#
+# Arguments:
+#  n: Integer, number of nodes
+#  k: Integer, number of communities
+#  l: Integer, number of meta-communities
+#  w: Numeric, homophily factor
+#
+# Returns: p-value of the test
+#
 exnbm <- function(n, k, l, w) {
   P <- Data_HBM(n, k, l, w)
   A <- rg_sample(P)

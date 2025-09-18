@@ -1,4 +1,4 @@
-#Code is obtained from Koo et. al. (2022)
+# Codes for performing orthogonal spectral clustering (OSC) (obtained from Koo et. al. (2022))
 
 embedding <- function(A, p = NULL, q = NULL,
                       scale = TRUE,

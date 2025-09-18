@@ -7,7 +7,18 @@ library(pbapply)
 
 source("bkm_functions.R")
 
-#Spectral clustering using laplacian
+# Performs spectral clustering using laplacian (SC-L)
+#
+# Arguments:
+#  A: n x n symmetric binary adjacency matrix
+#  k: Integer, number of communities
+#  maxiter: Integer, maximum number of iterations for kmeans
+#  nstart: Integer, number of initializations for kmeans
+#
+# Returns: A list
+#  cluster: Integer vector, estimated community assignments
+#  What: k x k numeric matrix, estimated block probability matrix
+#
 fast.clustering_laplacian <- function(A, k, maxiter, nstart) {
   n <- ncol(A)
   degree <- colSums(A)
@@ -27,6 +38,16 @@ fast.clustering_laplacian <- function(A, k, maxiter, nstart) {
   list(cluster = c, What = What)
 }
 
+# Simulates a network from SBM and performs community detection using SC-L and Q_1
+#
+# Arguments:
+#  wmat: symmetric block probability matrix
+#  comm: Integer vector of true communities
+#  maxiter: Integer, maximum number of iterations for kmeans
+#  nstart: Integer, number of initializations for kmeans
+#
+# Returns: community detection errors from SC-L and Q_1
+#
 sim_sbm_comp <- function(wmat, comm, maxiter, nstart) {
   n <- length(comm)
   k <- nrow(wmat)
@@ -66,8 +87,8 @@ wmat <- (delta/mean(P))*wmat
 
 #set.seed(12345)
 v <- pbreplicate(100, sim_sbm_comp(wmat, comm, maxiter, nstart))
-# average mislabelling error: SC-L, Q1
+# average community detection error: SC-L, Q_1
 mean(v[1,]); mean(v[2,])
-# s.d. mislabelling error: SC-L, Q1
+# s.d. community detection error: SC-L, Q_1
 sd(v[1,]); sd(v[2,])
 

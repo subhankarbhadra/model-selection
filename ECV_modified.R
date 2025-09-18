@@ -1,4 +1,5 @@
-#Code is obtained from Li et. al. (2020); modified to apply for a given value of K 
+# Codes for performing model selection using edge Cross-validation (ECV) (obtained from Li et. al. (2020))
+# Modified to apply for a given value of K 
 
 library(poweRlaw)
 library(RSpectra)

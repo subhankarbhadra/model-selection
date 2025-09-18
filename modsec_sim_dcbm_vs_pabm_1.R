@@ -2,6 +2,16 @@ library(pbapply)
 
 source("bkm_functions.R")
 
+# Simulates a network from DCBM and performs model selection (DCBM vs. PABM) using Q_2
+#
+# Arguments:
+#  n: Integer, number of nodes
+#  k: Integer, number of communities
+#  beta: Numeric, homophily factor
+#  avgdeg: Integer, average degree
+#
+# Returns: p-value of the test
+#
 f <- function(n, k, beta, avgdeg) {
   wmat <- (1-beta)*diag(k) + beta*outer(rep(1, k), rep(1, k))
   t <- rplcon(n, xmin = 1, alpha = 5)

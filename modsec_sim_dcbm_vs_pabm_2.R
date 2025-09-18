@@ -2,6 +2,13 @@ library(pbapply)
 
 source("bkm_functions.R")
 
+# Simulates a network from a 2-community PABM and performs model selection (DCBM vs. PABM) using Q_2
+#
+# Arguments:
+#  density: Numeric, network density
+#
+# Returns: p-value of the test
+#
 expabm1 <- function(density) {
   n <- 900
   k <- 2

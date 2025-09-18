@@ -2,6 +2,13 @@ library(pbapply)
 
 source("bkm_functions.R")
 
+# Simulates a network from a 3-community SBM and performs model selection
+#
+# Arguments:
+#  density: Numeric, network density
+#
+# Returns: Selected model
+#
 exsbm <- function(density) {
   n <- 900; k <- 3
   wmat <- (-1/3)*diag(k) + (2/3)*outer(rep(1, k), rep(1, k))
@@ -31,6 +38,13 @@ exsbm <- function(density) {
 gg <- pbreplicate(100, exsbm(.05))
 table(gg)
 
+# Simulates a network from a 3-community DCBM and performs model selection
+#
+# Arguments:
+#  density: Numeric, network density
+#
+# Returns: Selected model
+#
 exdcbm <- function(density) {
   n <- 900; k <- 3
   wmat <- (-1/3)*diag(k) + (2/3)*outer(rep(1, k), rep(1, k))
@@ -58,6 +72,13 @@ exdcbm <- function(density) {
 gg <- pbreplicate(100, exdcbm(.05))
 table(gg)
 
+# Simulates a network from a 3-community PABM and performs model selection
+#
+# Arguments:
+#  density: Numeric, network density
+#
+# Returns: Selected model
+#
 expabm3 <- function(density) {
   n <- 900
   k <- 3

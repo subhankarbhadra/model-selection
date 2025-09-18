@@ -7,7 +7,18 @@ library(pbapply)
 
 source("bkm_functions.R")
 
-#Regularized spectral clustering using laplacian
+# Performs regularized spectral clustering using laplacian (RSC-L)
+#
+# Arguments:
+#  A: n x n symmetric binary adjacency matrix
+#  k: Integer, number of communities
+#  maxiter: Integer, maximum number of iterations for kmeans
+#  nstart: Integer, number of initializations for kmeans
+#
+# Returns: A list
+#  cluster: Integer vector, estimated community assignments
+#  What: k x k numeric matrix, estimated block probability matrix
+#
 fast.clustering_DCBM_laplacian <- function(A, k, maxiter, nstart) {
   n <- ncol(A)
   degree <- colSums(A)
@@ -29,6 +40,18 @@ fast.clustering_DCBM_laplacian <- function(A, k, maxiter, nstart) {
   list(cluster = c, What = What)
 }
 
+# Simulates a network from DCBM and performs community detection using RSC-L and Q_2
+#
+# Arguments:
+#  wmat: symmetric block probability matrix
+#  t: Integer vector of degree parameters
+#  comm: Integer vector of true communities
+#  dt: Numeric, network density
+#  maxiter: Integer, maximum number of iterations for clustering
+#  nstart: Integer, number of initializations for clustering
+#
+# Returns: community detection errors and runtimes from RSC-L and Q_2
+#
 sim_dcbm_comp <- function(wmat, t, comm, dt, maxiter, nstart) {
   k <- nrow(wmat)
   n <- length(comm)
@@ -69,10 +92,10 @@ comm <- rep(1:k, c(n/4, n/4, n/2))
 
 #set.seed(12345)
 v <- pbreplicate(100, sim_dcbm_comp(wmat, rbeta(n, 1, 5), comm, delta, maxiter, nstart))
-# average mislabelling error: RSC-L, Q2
+# average community detection error: RSC-L, Q_2
 mean(v[1,]); mean(v[2,])
-# s.d. mislabelling error: RSC-L, Q2
+# s.d. community detection error: RSC-L, Q_2
 sd(v[1,]); sd(v[2,])
-# average runtime: RSC, Q2
+# average runtime: RSC-L, Q_2
 mean(v[3,]); mean(v[4,])
 

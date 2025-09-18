@@ -1,3 +1,5 @@
+# Codes for generating networks from NBM (obtained from Noroozi et. al. (2021))
+
 Data_HBM <- function(n, K, rr, q) {
   n_K <- n / K
   K_r <- K / rr

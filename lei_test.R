@@ -1,6 +1,17 @@
 library(RSpectra)
 library(RMTstat)
 
+# Performs test H_0: A ~ SBM vs. H_1: A ~ DCBM using EigMax (Lei (2016))
+#
+# Arguments:
+#  A: n x n symmetric binary adjacency matrix
+#  k: Integer, number of communities
+#  maxiter: Integer, maximum number of iterations for kmeans 
+#  nstart: Integer, number of initializations for kmeans
+#  alpha: Numeric, level of significance
+#
+# Returns: p-values of the test, without and with bootstrap correction 
+#
 lei_eigmax <- function(A, k, maxiter, nstart, alpha = 0.05) {
   sbmfit <- projSC(A, k, maxiter, nstart, "SBM")
   n <- nrow(A)
@@ -32,6 +43,15 @@ lei_eigmax <- function(A, k, maxiter, nstart, alpha = 0.05) {
   list(wob = wob, wb = wb)
 }
 
+# Generates bootstrap replicates of SBM networks and computes the largest and smallest eigenvalue
+#
+# Arguments:
+#  wmathat: k x k numeric matrix, estimated block probability matrix
+#  est_comm: Integer vector of estimated communities
+#  Phat: n x n numeric matrix, estimated probability matrix
+#
+# Returns: The largest and smallest eigenvalue of a bootstrapped network
+#
 sim_lei <- function(wmathat, est_comm, Phat) {
   k <- length(unique(est_comm))
   n <- length(est_comm)

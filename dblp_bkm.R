@@ -2,12 +2,7 @@ library(pbapply)
 
 source("bkm_functions.R")
 
-Latent_positions <- function(A, d) {
-  n <- ncol(A)
-  e <- irlba(A, nu = d, nv = d)
-  Uhat <- e$u
-  Uhat %*% diag(sqrt(e$d))
-}
+# DBLP dataset
 setwd("data//DBLP_four_area")
 a = read.csv("csv/author_label.csv", header = F, col.names = c("a.id","a.lab","a.name"))
 a <- a[order(a$a.id),]
@@ -56,10 +51,19 @@ ACA <- as(ACA, "sparseMatrix")
 classes <- as.numeric(a$a.lab)
 k <- length(unique(classes))
 
+Latent_positions <- function(A, d) {
+  n <- ncol(A)
+  e <- irlba(A, nu = d, nv = d)
+  Uhat <- e$u
+  Uhat %*% diag(sqrt(e$d))
+}
+
+# Model selection (SBM vs. DCBM)
 ff <- pbreplicate(100, sbm_vs_dcbm(ACA, k, 100, 25, 50)$pvalue)
 ff
 mean(ff)
 
+# Model selection (DCBM vs. PABM)
 gg <- pbreplicate(100, dcbm_vs_pabm(ACA, k, 100, 25, 50)$pvalue)
 gg
 mean(gg)

@@ -4,6 +4,16 @@ source("bkm_functions.R")
 source("ECV_modified.R")
 source("lei_test.R")
 
+# Simulates a network from DCBM and performs model selection (SBM vs. DCBM) using Q_1, EigMax, and ECV
+#
+# Arguments:
+#  n: Integer, number of nodes
+#  k: Integer, number of communities
+#  beta: Numeric, homophily factor
+#  avgdeg: Integer, average degree
+#
+# Returns: Selected models using Q_1, EigMax, EigMax-boot, and ECV with l2-loss and deviance loss
+#
 f <- function(n, k, beta, avgdeg) {
   wmat <- (1-beta)*diag(k) + beta*outer(rep(1, k), rep(1, k))
   t <- rplcon(n, xmin = 1, alpha = 5)
